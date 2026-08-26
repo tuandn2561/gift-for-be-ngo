@@ -1,0 +1,272 @@
+/* ==========================================================================
+   RESPONSIVE DESIGN & MOBILE OPTIMIZATIONS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .brand-info h1 {
+    font-size: 0.95rem;
+  }
+
+  .brand-info p {
+    display: none;
+  }
+
+  .brand-icon {
+    font-size: 22px;
+  }
+
+  /* Compact Top Music Player on Mobile */
+  .top-music-player {
+    padding: 4px 8px;
+    gap: 6px;
+    max-width: 170px;
+  }
+
+  .player-info {
+    max-width: 75px;
+  }
+
+  .track-title {
+    font-size: 0.72rem;
+  }
+
+  .track-artist {
+    display: none;
+  }
+
+  .player-volume-group {
+    display: none; /* Auto-fit on small screens */
+  }
+
+  .mini-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
+
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .celestial-body {
+    top: 65px;
+    right: 6%;
+    width: 60px;
+    height: 60px;
+  }
+
+  .cloud-system {
+    top: 45px;
+    height: 120px;
+  }
+
+  .cloud-1 { width: 120px; height: 38px; top: 5px; left: -15px; }
+  .cloud-2 { width: 110px; height: 36px; top: 30px; left: 16%; }
+  .cloud-3 { width: 130px; height: 40px; top: 8px; left: 38%; }
+  .cloud-4 { width: 105px; height: 34px; top: 32px; left: 62%; }
+  .cloud-5 { width: 125px; height: 38px; top: 12px; left: 82%; }
+  .cloud-6 { width: 100px; height: 32px; top: 40px; left: 4%; }
+  .cloud-7 { width: 115px; height: 36px; top: 50px; left: 48%; }
+  .cloud-8 { width: 105px; height: 34px; top: 48px; left: 86%; }
+  .cloud-9, .cloud-10, .cloud-11, .cloud-12,
+  .cloud-13, .cloud-14, .cloud-15, .cloud-16,
+  .cloud-17, .cloud-18, .cloud-19, .cloud-20,
+  .cloud-21, .cloud-22, .cloud-23, .cloud-24 { display: none; }
+
+  .hero-greeting {
+    position: relative;
+    top: auto;
+    left: auto;
+    text-align: center;
+    margin-top: 52px;
+    margin-bottom: 6px;
+    padding: 10px 16px;
+    max-width: calc(100% - 24px);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .hero-title {
+    font-size: 1.35rem;
+    margin-bottom: 2px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.78rem;
+  }
+
+  .hero-hint {
+    display: none;
+  }
+
+  .sparkle-badge {
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    margin-bottom: 4px;
+  }
+
+  /* 3D Corn Mascot Mobile: Cute & Compact Proportion */
+  .corn-plant-svg {
+    width: 200px;
+    height: 250px;
+  }
+
+  .corn-speech-bubble {
+    font-size: 0.82rem;
+    padding: 8px 14px;
+    max-width: 240px;
+    margin-bottom: 8px;
+  }
+
+  /* Baby Bean Mascot Mobile */
+  .baby-bean-wrapper {
+    bottom: -2px;
+    right: -8px;
+  }
+
+  .baby-bean-svg {
+    width: 85px;
+    height: 110px;
+  }
+
+  .bean-speech-bubble {
+    font-size: 0.72rem;
+    padding: 6px 10px;
+    max-width: 160px;
+  }
+
+  .memory-drop {
+    padding: 4px;
+  }
+
+  .ground-meadow {
+    height: 85px;
+  }
+
+  /* Bottom Dock on mobile */
+  .bottom-dock {
+    bottom: 10px;
+    padding: 6px 10px;
+    gap: 6px;
+    width: calc(100% - 24px);
+    justify-content: space-around;
+  }
+
+  .dock-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    gap: 4px;
+  }
+
+  .dock-btn span.btn-label {
+    display: none;
+  }
+
+  .dock-btn span.btn-icon-inner {
+    font-size: 1.15rem;
+  }
+
+  /* Modals on mobile */
+  .modal-content {
+    padding: 20px 16px;
+    border-radius: 20px;
+  }
+
+  .polaroid-img-wrapper {
+    height: 270px;
+  }
+
+  .polaroid-text {
+    font-size: 1.3rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .letter-paper {
+    padding: 18px 14px;
+  }
+
+  .letter-header {
+    font-size: 1.7rem;
+  }
+
+  .letter-body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* 3D Envelope Intro on mobile */
+  .intro-content {
+    padding: 16px;
+  }
+
+  .intro-greeting {
+    font-size: 1.6rem;
+  }
+
+  .intro-hint {
+    font-size: 0.88rem;
+    margin-bottom: 20px;
+  }
+
+  .envelope-wrapper {
+    width: 240px;
+    height: 155px;
+    margin-bottom: 24px;
+  }
+
+  .envelope-pocket {
+    border-left-width: 120px;
+    border-right-width: 120px;
+    border-bottom-width: 85px;
+    border-top-width: 70px;
+  }
+
+  .envelope-flap {
+    border-left-width: 120px;
+    border-right-width: 120px;
+    border-top-width: 85px;
+  }
+
+  .envelope-letter {
+    width: 215px;
+    height: 135px;
+    left: 12px;
+  }
+
+  .letter-inner-text {
+    font-size: 1.15rem;
+  }
+
+  .intro-open-btn {
+    padding: 12px 28px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-title {
+    font-size: 2.3rem;
+  }
+  .corn-plant-svg {
+    width: 190px;
+    height: 250px;
+  }
+}
+
+/* Touch screen improvements */
+@media (hover: none) {
+  .btn-icon .tooltip {
+    display: none;
+  }
+}

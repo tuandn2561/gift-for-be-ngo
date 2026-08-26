@@ -1,0 +1,478 @@
+/* ==========================================================================
+   ANIMATIONS & KEYFRAMES
+   ========================================================================== */
+
+/* Mascot Corn Breeze Sway */
+@keyframes corn-breeze-sway {
+  0% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  25% {
+    transform: rotate(3.5deg) skewX(1.5deg);
+  }
+  50% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  75% {
+    transform: rotate(-3.5deg) skewX(-1.5deg);
+  }
+  100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+}
+
+@keyframes corn-leaf-sway-upper-left {
+  0%, 100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  50% {
+    transform: rotate(-10deg) skewX(-4deg) scaleY(1.04);
+  }
+}
+
+@keyframes corn-leaf-sway-upper-right {
+  0%, 100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  50% {
+    transform: rotate(10deg) skewX(4deg) scaleY(1.04);
+  }
+}
+
+@keyframes corn-leaf-sway-mid-left {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-8deg) scaleY(1.03);
+  }
+}
+
+@keyframes corn-leaf-sway-mid-right {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(8deg) scaleY(1.03);
+  }
+}
+
+@keyframes corn-leaf-sway-low-left {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes corn-leaf-sway-low-right {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes corn-hair-sway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+
+/* 🌿 Baby Bean Plant Animations */
+@keyframes baby-bean-bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-5px) rotate(4deg) scale(1.03);
+  }
+  50% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  75% {
+    transform: translateY(-3px) rotate(-3deg) scale(1.02);
+  }
+}
+
+@keyframes bean-leaves-wiggle {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(-10deg) scale(1.08);
+  }
+}
+
+@keyframes bean-tendril-curl {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.08) rotate(8deg);
+  }
+}
+
+/* Cloud Floating Variations */
+@keyframes float-cloud-1 {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(45px) translateY(-10px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes float-cloud-2 {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-55px) translateY(8px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes float-cloud-3 {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(35px) translateY(-8px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes float-cloud-4 {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-40px) translateY(-6px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes float-cloud-5 {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(50px) translateY(7px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* Eye Blinking */
+@keyframes eye-blink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* Sparkle and Sun */
+@keyframes rotate-sun {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sparkle-float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-8px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-cute {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+@keyframes shimmer-text {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Floating Hearts from Mascot Click */
+@keyframes float-heart-up {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.6);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(var(--tx, 30px), -80px) scale(1.2) rotate(15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx, 50px), -160px) scale(0.9) rotate(30deg);
+  }
+}
+
+/* Flower swaying on meadow */
+@keyframes flower-sway {
+  0% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
+}
+
+/* Fairy Lights in Night Mode */
+@keyframes fairy-pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+/* Vinyl Disc spinning */
+@keyframes spin-vinyl {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Birthday Candle Flame */
+@keyframes flame-flicker {
+  0% {
+    transform: translateX(-50%) scale(1) rotate(-1deg);
+    opacity: 0.95;
+  }
+  25% {
+    transform: translateX(-50%) scale(1.08) rotate(2deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) scale(0.92) rotate(-2deg);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translateX(-50%) scale(1.04) rotate(1deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1) rotate(0deg);
+    opacity: 0.95;
+  }
+}
+
+/* Smoke puff when candle blown out */
+@keyframes smoke-puff {
+  0% {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1) translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(-60%) scale(2) translateY(-25px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-40%) scale(3.5) translateY(-50px);
+  }
+}
+
+/* Raindrop Fall Keyframe Fallback (used when not managed by requestAnimationFrame) */
+@keyframes rain-fall {
+  0% {
+    top: -80px;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 92vh;
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+/* Bubble Ripple Pulse */
+@keyframes bubble-ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 112, 166, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(255, 112, 166, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 112, 166, 0);
+  }
+}
+
+/* Confetti Burst */
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotateZ(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(600px) rotateZ(720deg);
+  }
+}
+
+/* ==========================================================================
+   🐝 🦋 FLYING BEES & BUTTERFLIES ANIMATIONS
+   ========================================================================== */
+
+/* Bee Wing Flutter */
+@keyframes bee-wing-flutter {
+  0% { transform: scaleY(1) rotate(0deg); }
+  100% { transform: scaleY(0.35) rotate(-25deg); }
+}
+
+/* Butterfly 2D Flap (Ultra-reliable SVG Flapping) */
+@keyframes butterfly-flap-left {
+  0% { transform: scaleX(1) rotate(0deg); }
+  100% { transform: scaleX(0.22) rotate(-14deg); }
+}
+
+@keyframes butterfly-flap-right {
+  0% { transform: scaleX(1) rotate(0deg); }
+  100% { transform: scaleX(0.22) rotate(14deg); }
+}
+
+/* Bee 1 Flight: Figure-8 Roaming Across Left & Center */
+@keyframes bee-flight-1 {
+  0% {
+    transform: translate(12vw, 55vh) scaleX(1) rotate(-5deg);
+  }
+  20% {
+    transform: translate(28vw, 42vh) scaleX(1) rotate(8deg);
+  }
+  40% {
+    transform: translate(45vw, 58vh) scaleX(1) rotate(-6deg);
+  }
+  49% {
+    transform: translate(48vw, 60vh) scaleX(1) rotate(0deg);
+  }
+  50% {
+    transform: translate(48vw, 60vh) scaleX(-1) rotate(0deg);
+  }
+  70% {
+    transform: translate(32vw, 68vh) scaleX(-1) rotate(6deg);
+  }
+  90% {
+    transform: translate(15vw, 48vh) scaleX(-1) rotate(-8deg);
+  }
+  99% {
+    transform: translate(12vw, 55vh) scaleX(-1) rotate(0deg);
+  }
+  100% {
+    transform: translate(12vw, 55vh) scaleX(1) rotate(-5deg);
+  }
+}
+
+/* Bee 2 Flight: Playful Loops Near Corn & Bean Plants */
+@keyframes bee-flight-2 {
+  0% {
+    transform: translate(65vw, 62vh) scaleX(-1) rotate(6deg);
+  }
+  25% {
+    transform: translate(52vw, 50vh) scaleX(-1) rotate(-10deg);
+  }
+  45% {
+    transform: translate(38vw, 66vh) scaleX(-1) rotate(8deg);
+  }
+  49% {
+    transform: translate(36vw, 68vh) scaleX(-1);
+  }
+  50% {
+    transform: translate(36vw, 68vh) scaleX(1);
+  }
+  75% {
+    transform: translate(58vw, 72vh) scaleX(1) rotate(-6deg);
+  }
+  90% {
+    transform: translate(72vw, 54vh) scaleX(1) rotate(12deg);
+  }
+  99% {
+    transform: translate(65vw, 62vh) scaleX(1);
+  }
+  100% {
+    transform: translate(65vw, 62vh) scaleX(-1) rotate(6deg);
+  }
+}
+
+/* Butterfly 1 Flight: Graceful Diagonal Flutter (Pink) */
+@keyframes butterfly-flight-1 {
+  0% {
+    transform: translate(8vw, 68vh) rotate(5deg);
+  }
+  20% {
+    transform: translate(22vw, 52vh) rotate(-8deg);
+  }
+  40% {
+    transform: translate(35vw, 38vh) rotate(12deg);
+  }
+  60% {
+    transform: translate(55vw, 45vh) rotate(-5deg);
+  }
+  80% {
+    transform: translate(28vw, 62vh) rotate(10deg);
+  }
+  100% {
+    transform: translate(8vw, 68vh) rotate(5deg);
+  }
+}
+
+/* Butterfly 2 Flight: High Sky Glide (Blue) */
+@keyframes butterfly-flight-2 {
+  0% {
+    transform: translate(75vw, 32vh) rotate(-8deg);
+  }
+  25% {
+    transform: translate(88vw, 45vh) rotate(10deg);
+  }
+  50% {
+    transform: translate(70vw, 56vh) rotate(-6deg);
+  }
+  75% {
+    transform: translate(60vw, 40vh) rotate(8deg);
+  }
+  100% {
+    transform: translate(75vw, 32vh) rotate(-8deg);
+  }
+}
+
+/* Butterfly 3 Flight: Meadow Flowers Skim (Gold) */
+@keyframes butterfly-flight-3 {
+  0% {
+    transform: translate(18vw, 75vh) rotate(4deg);
+  }
+  20% {
+    transform: translate(38vw, 70vh) rotate(-6deg);
+  }
+  40% {
+    transform: translate(62vw, 74vh) rotate(8deg);
+  }
+  60% {
+    transform: translate(82vw, 68vh) rotate(-5deg);
+  }
+  80% {
+    transform: translate(50vw, 76vh) rotate(7deg);
+  }
+  100% {
+    transform: translate(18vw, 75vh) rotate(4deg);
+  }
+}

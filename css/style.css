@@ -1,0 +1,1935 @@
+/* ==========================================================================
+   BIRTHDAY GIFT FOR "BÉ HẠT NGÔ" (NGÔ THỊ NGỌC TRINH)
+   Theme: Mint Green, Ocean Blue, Cute Pastel Pink & Corn Yellow
+   ========================================================================== */
+
+:root {
+  /* Common Palette */
+  --color-primary-green: #38b000;
+  --color-light-green: #70e000;
+  --color-mint-soft: #d8f3dc;
+  --color-mint-glow: rgba(112, 224, 0, 0.4);
+
+  --color-sky-blue: #38b6ff;
+  --color-deep-blue: #0077b6;
+  --color-light-blue: #e0f2fe;
+  --color-blue-glow: rgba(56, 182, 255, 0.35);
+
+  --color-pink-accent: #ff70a6;
+  --color-pink-soft: #ffcad4;
+  --color-pink-light: #ffe5ec;
+  --color-pink-glow: rgba(255, 112, 166, 0.4);
+
+  --color-corn-gold: #ffd166;
+  --color-corn-yellow: #ffeaa7;
+  --color-corn-dark: #e59866;
+
+  --color-white: #ffffff;
+  --color-card-bg: rgba(255, 255, 255, 0.88);
+  --color-glass-border: rgba(255, 255, 255, 0.6);
+  --color-glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+
+  --font-main: 'Quicksand', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Comfortaa', cursive, sans-serif;
+  --font-handwriting: 'Dancing Script', 'Caveat', cursive;
+
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Day Mode Variables */
+body[data-theme="day"] {
+  --bg-sky: linear-gradient(180deg, #a0e9ff 0%, #cbf3f0 35%, #d8f3dc 70%, #95d5b2 100%);
+  --bg-sun-moon: radial-gradient(circle, #fff3b0 0%, #ffd166 60%, rgba(255, 209, 102, 0) 100%);
+  --bg-ground: linear-gradient(180deg, #70e000 0%, #38b000 45%, #007200 100%);
+  --text-main: #1f3a2c;
+  --text-muted: #4a6b57;
+  --text-heading: #134e4a;
+  --panel-bg: rgba(255, 255, 255, 0.82);
+  --panel-border: rgba(255, 255, 255, 0.85);
+  --cloud-color: #ffffff;
+  --cloud-shadow: rgba(56, 182, 255, 0.25);
+  --raindrop-border: rgba(56, 182, 255, 0.7);
+  --raindrop-glow: rgba(56, 182, 255, 0.3);
+  --grass-flower-1: #ff70a6;
+  --grass-flower-2: #ffd166;
+  --star-opacity: 0;
+  --sun-opacity: 1;
+  --moon-opacity: 0;
+  --firefly-opacity: 0;
+  --fairy-light-glow: rgba(255, 243, 176, 0.2);
+}
+
+/* Night Mode Variables */
+body[data-theme="night"] {
+  --bg-sky: linear-gradient(180deg, #03071e 0%, #0b132b 30%, #1c2541 65%, #1b4332 100%);
+  --bg-sun-moon: radial-gradient(circle, #fbf8cc 0%, #f7d070 50%, rgba(247, 208, 112, 0) 100%);
+  --bg-ground: linear-gradient(180deg, #1b4332 0%, #081c15 60%, #040d0a 100%);
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-heading: #fbcfe8;
+  --panel-bg: rgba(15, 23, 42, 0.78);
+  --panel-border: rgba(255, 255, 255, 0.2);
+  --cloud-color: #334155;
+  --cloud-shadow: rgba(0, 0, 0, 0.4);
+  --raindrop-border: rgba(244, 114, 182, 0.8);
+  --raindrop-glow: rgba(244, 114, 182, 0.4);
+  --grass-flower-1: #f472b6;
+  --grass-flower-2: #67e8f9;
+  --star-opacity: 1;
+  --sun-opacity: 0;
+  --moon-opacity: 1;
+  --firefly-opacity: 1;
+  --fairy-light-glow: rgba(255, 234, 167, 0.8);
+}
+
+/* CSS Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-main);
+  color: var(--text-main);
+  background: var(--bg-sky);
+  transition: background 0.8s ease, color 0.5s ease;
+  user-select: none;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Canvas overlay for particle & fireworks */
+#fireworks-canvas,
+#star-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 5;
+}
+
+#star-canvas {
+  z-index: 1;
+  opacity: var(--star-opacity);
+  transition: opacity 1s ease;
+}
+
+/* ==========================================================================
+   HEADER & FLOATING CONTROL BAR WITH MUSIC PLAYER
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--panel-border);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+}
+
+body[data-theme="night"] .site-header {
+  background: rgba(15, 23, 42, 0.65);
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.brand-icon {
+  font-size: 26px;
+  animation: pulse-cute 2s infinite ease-in-out;
+  display: inline-block;
+}
+
+.brand-info h1 {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-info p {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-pink-accent);
+}
+
+/* Top Music Player Widget in Header */
+.top-music-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--panel-bg);
+  padding: 6px 16px;
+  border-radius: 40px;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.vinyl-disc {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1e293b;
+  border: 2.5px solid #ffd166;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vinyl-disc.spinning {
+  animation: spin-vinyl 4s infinite linear;
+}
+
+.vinyl-center {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-pink-accent);
+  border: 2px solid #fff;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 150px;
+  overflow: hidden;
+}
+
+.track-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-artist {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.player-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  outline: none;
+  padding: 0;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ⏭️⏮️ Cute Prev & Next Buttons */
+.btn-prev,
+.btn-next {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 112, 166, 0.12);
+  border: 1.5px solid rgba(255, 112, 166, 0.35);
+  color: var(--color-pink-accent);
+  box-shadow: 0 2px 6px rgba(255, 112, 166, 0.12);
+}
+
+.btn-prev:hover,
+.btn-next:hover {
+  background: linear-gradient(135deg, #ff70a6, #ffd166);
+  border-color: #ffd166;
+  color: #ffffff;
+  transform: scale(1.16) translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 112, 166, 0.45);
+}
+
+.btn-prev:active,
+.btn-next:active {
+  transform: scale(0.9) translateY(1px);
+  box-shadow: 0 1px 3px rgba(255, 112, 166, 0.2);
+}
+
+/* ▶️⏸️ Prominent Cute Play/Pause Button */
+.btn-play-main {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff70a6, #ff9ebb);
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(255, 112, 166, 0.4);
+}
+
+.btn-play-main:hover {
+  background: linear-gradient(135deg, #ff5376, #ff70a6);
+  transform: scale(1.18) translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 112, 166, 0.65);
+}
+
+.btn-play-main:active {
+  transform: scale(0.92) translateY(1px);
+}
+
+/* Volume Adjustment Group */
+.player-volume-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 8px;
+  border-left: 1px solid var(--panel-border);
+}
+
+.volume-icon {
+  font-size: 0.95rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 70px;
+  height: 6px;
+  border-radius: 5px;
+  background: rgba(255, 112, 166, 0.3);
+  outline: none;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-pink-accent);
+  box-shadow: 0 0 8px var(--color-pink-glow);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-pink-accent);
+  box-shadow: 0 0 8px var(--color-pink-glow);
+  cursor: pointer;
+}
+
+/* Control Buttons Top Right */
+.top-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-icon {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: var(--transition-bounce);
+  outline: none;
+}
+
+.btn-icon:hover {
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 6px 18px var(--color-pink-glow);
+  border-color: var(--color-pink-accent);
+}
+
+.btn-icon:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.btn-icon .tooltip {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 100;
+}
+
+.btn-icon:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   SKY ELEMENTS: SUN, MOON, CLOUDS, RAIN
+   ========================================================================== */
+.sky-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Sun and Moon */
+.celestial-body {
+  position: absolute;
+  top: 75px;
+  right: 10%;
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
+}
+
+.sun {
+  background: radial-gradient(circle, #fff9db 0%, #ffd166 60%, #ffb703 100%);
+  box-shadow: 0 0 50px #ffd166, 0 0 100px rgba(255, 209, 102, 0.6);
+  opacity: var(--sun-opacity);
+  animation: rotate-sun 25s infinite linear;
+}
+
+.moon {
+  background: radial-gradient(circle, #ffffff 10%, #fdf0d5 70%, #d8b4e2 100%);
+  box-shadow: 0 0 40px #fdf0d5, 0 0 80px rgba(253, 240, 213, 0.5);
+  opacity: var(--moon-opacity);
+}
+
+.moon::after {
+  content: '✨';
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  font-size: 20px;
+  animation: sparkle-float 3s infinite ease-in-out;
+}
+
+/* Clouds Bar at the Top (24 Staggered Animated Clouds) */
+.cloud-system {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  pointer-events: auto;
+  z-index: 6;
+}
+
+.cloud {
+  position: absolute;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  box-shadow: 0 10px 25px var(--cloud-shadow);
+  transition: background 0.8s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+/* 24 Clouds Positions & Dimensions */
+.cloud-1 { width: 190px; height: 60px; top: 12px; left: 1%; animation: float-cloud-1 30s infinite ease-in-out alternate; }
+.cloud-1::before { width: 80px; height: 80px; top: -40px; left: 28px; }
+.cloud-1::after { width: 95px; height: 95px; top: -48px; right: 28px; }
+
+.cloud-2 { width: 140px; height: 48px; top: 35px; left: 14%; animation: float-cloud-2 36s infinite ease-in-out alternate; }
+.cloud-2::before { width: 60px; height: 60px; top: -30px; left: 20px; }
+.cloud-2::after { width: 70px; height: 70px; top: -35px; right: 20px; }
+
+.cloud-3 { width: 220px; height: 70px; top: 15px; left: 25%; animation: float-cloud-3 32s infinite ease-in-out alternate; }
+.cloud-3::before { width: 95px; height: 95px; top: -48px; left: 35px; }
+.cloud-3::after { width: 110px; height: 110px; top: -55px; right: 35px; }
+
+.cloud-4 { width: 130px; height: 45px; top: 40px; left: 42%; animation: float-cloud-4 28s infinite ease-in-out alternate; }
+.cloud-4::before { width: 55px; height: 55px; top: -28px; left: 20px; }
+.cloud-4::after { width: 65px; height: 65px; top: -32px; right: 20px; }
+
+.cloud-5 { width: 200px; height: 65px; top: 18px; left: 53%; animation: float-cloud-5 35s infinite ease-in-out alternate; }
+.cloud-5::before { width: 85px; height: 85px; top: -42px; left: 30px; }
+.cloud-5::after { width: 100px; height: 100px; top: -50px; right: 30px; }
+
+.cloud-6 { width: 150px; height: 50px; top: 38px; left: 68%; animation: float-cloud-1 33s infinite ease-in-out alternate-reverse; }
+.cloud-6::before { width: 65px; height: 65px; top: -32px; left: 22px; }
+.cloud-6::after { width: 75px; height: 75px; top: -38px; right: 22px; }
+
+.cloud-7 { width: 180px; height: 58px; top: 10px; left: 80%; animation: float-cloud-2 38s infinite ease-in-out alternate; }
+.cloud-7::before { width: 75px; height: 75px; top: -38px; left: 26px; }
+.cloud-7::after { width: 90px; height: 90px; top: -45px; right: 26px; }
+
+.cloud-8 { width: 160px; height: 52px; top: 30px; left: 91%; animation: float-cloud-3 29s infinite ease-in-out alternate; }
+.cloud-8::before { width: 70px; height: 70px; top: -35px; left: 24px; }
+.cloud-8::after { width: 80px; height: 80px; top: -40px; right: 24px; }
+
+.cloud-9 { width: 120px; height: 42px; top: 58px; left: 6%; animation: float-cloud-4 34s infinite ease-in-out alternate; }
+.cloud-9::before { width: 50px; height: 50px; top: -25px; left: 18px; }
+.cloud-9::after { width: 60px; height: 60px; top: -30px; right: 18px; }
+
+.cloud-10 { width: 170px; height: 54px; top: 72px; left: 19%; animation: float-cloud-5 31s infinite ease-in-out alternate; }
+.cloud-10::before { width: 72px; height: 72px; top: -36px; left: 25px; }
+.cloud-10::after { width: 85px; height: 85px; top: -42px; right: 25px; }
+
+.cloud-11 { width: 135px; height: 46px; top: 62px; left: 34%; animation: float-cloud-1 27s infinite ease-in-out alternate; }
+.cloud-11::before { width: 58px; height: 58px; top: -29px; left: 20px; }
+.cloud-11::after { width: 68px; height: 68px; top: -34px; right: 20px; }
+
+.cloud-12 { width: 190px; height: 60px; top: 75px; left: 48%; animation: float-cloud-2 40s infinite ease-in-out alternate; }
+.cloud-12::before { width: 80px; height: 80px; top: -40px; left: 28px; }
+.cloud-12::after { width: 95px; height: 95px; top: -48px; right: 28px; }
+
+.cloud-13 { width: 145px; height: 48px; top: 60px; left: 63%; animation: float-cloud-3 36s infinite ease-in-out alternate; }
+.cloud-13::before { width: 62px; height: 62px; top: -31px; left: 22px; }
+.cloud-13::after { width: 72px; height: 72px; top: -36px; right: 22px; }
+
+.cloud-14 { width: 165px; height: 52px; top: 78px; left: 76%; animation: float-cloud-4 32s infinite ease-in-out alternate; }
+.cloud-14::before { width: 70px; height: 70px; top: -35px; left: 24px; }
+.cloud-14::after { width: 82px; height: 82px; top: -41px; right: 24px; }
+
+.cloud-15 { width: 125px; height: 42px; top: 65px; left: 88%; animation: float-cloud-5 28s infinite ease-in-out alternate; }
+.cloud-15::before { width: 54px; height: 54px; top: -27px; left: 18px; }
+.cloud-15::after { width: 62px; height: 62px; top: -31px; right: 18px; }
+
+.cloud-16 { width: 110px; height: 38px; top: 95px; left: 2%; opacity: 0.88; animation: float-cloud-1 42s infinite ease-in-out alternate; }
+.cloud-16::before { width: 48px; height: 48px; top: -24px; left: 16px; }
+.cloud-16::after { width: 55px; height: 55px; top: -28px; right: 16px; }
+
+.cloud-17 { width: 155px; height: 50px; top: 105px; left: 13%; opacity: 0.88; animation: float-cloud-2 37s infinite ease-in-out alternate; }
+.cloud-17::before { width: 66px; height: 66px; top: -33px; left: 22px; }
+.cloud-17::after { width: 78px; height: 78px; top: -39px; right: 22px; }
+
+.cloud-18 { width: 130px; height: 44px; top: 92px; left: 28%; opacity: 0.88; animation: float-cloud-3 33s infinite ease-in-out alternate; }
+.cloud-18::before { width: 55px; height: 55px; top: -28px; left: 19px; }
+.cloud-18::after { width: 65px; height: 65px; top: -33px; right: 19px; }
+
+.cloud-19 { width: 160px; height: 52px; top: 110px; left: 43%; opacity: 0.88; animation: float-cloud-4 39s infinite ease-in-out alternate; }
+.cloud-19::before { width: 68px; height: 68px; top: -34px; left: 23px; }
+.cloud-19::after { width: 80px; height: 80px; top: -40px; right: 23px; }
+
+.cloud-20 { width: 120px; height: 40px; top: 98px; left: 58%; opacity: 0.88; animation: float-cloud-5 35s infinite ease-in-out alternate; }
+.cloud-20::before { width: 52px; height: 52px; top: -26px; left: 18px; }
+.cloud-20::after { width: 60px; height: 60px; top: -30px; right: 18px; }
+
+.cloud-21 { width: 175px; height: 56px; top: 112px; left: 71%; opacity: 0.88; animation: float-cloud-1 31s infinite ease-in-out alternate; }
+.cloud-21::before { width: 75px; height: 75px; top: -37px; left: 25px; }
+.cloud-21::after { width: 88px; height: 88px; top: -44px; right: 25px; }
+
+.cloud-22 { width: 135px; height: 45px; top: 95px; left: 85%; opacity: 0.88; animation: float-cloud-2 44s infinite ease-in-out alternate; }
+.cloud-22::before { width: 58px; height: 58px; top: -29px; left: 20px; }
+.cloud-22::after { width: 68px; height: 68px; top: -34px; right: 20px; }
+
+.cloud-23 { width: 115px; height: 38px; top: 125px; left: 22%; opacity: 0.8; animation: float-cloud-3 48s infinite ease-in-out alternate; }
+.cloud-23::before { width: 48px; height: 48px; top: -24px; left: 16px; }
+.cloud-23::after { width: 58px; height: 58px; top: -29px; right: 16px; }
+
+.cloud-24 { width: 140px; height: 46px; top: 128px; left: 66%; opacity: 0.8; animation: float-cloud-4 46s infinite ease-in-out alternate; }
+.cloud-24::before { width: 60px; height: 60px; top: -30px; left: 20px; }
+.cloud-24::after { width: 70px; height: 70px; top: -35px; right: 20px; }
+
+.cloud-face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.cloud-eye {
+  width: 5px;
+  height: 5px;
+  background: #334155;
+  border-radius: 50%;
+  animation: eye-blink 4s infinite;
+}
+
+.cloud-blush {
+  width: 8px;
+  height: 5px;
+  background: var(--color-pink-accent);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.cloud-smile {
+  width: 10px;
+  height: 5px;
+  border-bottom: 2px solid #334155;
+  border-radius: 0 0 10px 10px;
+}
+
+/* Raindrop Container */
+.rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 32; /* Higher than main-stage so raindrops can be hovered & clicked anywhere! */
+  overflow: hidden;
+}
+
+/* Individual Memory Raindrop Bubble */
+.memory-drop {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 3px solid var(--raindrop-border);
+  box-shadow: 0 12px 30px var(--raindrop-glow), inset 0 3px 10px rgba(255,255,255,0.9);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, top, left;
+  user-select: none;
+}
+
+.memory-drop:hover {
+  transform: scale(1.32) rotate(4deg) !important;
+  z-index: 50 !important;
+  border-color: var(--color-pink-accent) !important;
+  box-shadow: 0 20px 50px rgba(255, 112, 166, 0.8), 0 0 25px rgba(255, 209, 102, 0.7), inset 0 4px 15px rgba(255,255,255,1) !important;
+}
+
+.memory-drop-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.memory-drop::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 18%;
+  width: 28%;
+  height: 16%;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  transform: rotate(-30deg);
+  pointer-events: none;
+}
+
+.memory-drop-badge {
+  position: absolute;
+  bottom: -6px;
+  right: -4px;
+  background: var(--color-pink-accent);
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* ==========================================================================
+   MAIN STAGE: CENTERPIECE & CUTE CORN MASCOT
+   ========================================================================== */
+.main-stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 75px;
+  z-index: 15;
+}
+
+/* Title & Birthday Greeting Banner (Centered Above) */
+.hero-greeting {
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 20;
+  padding: 0 16px;
+  width: 100%;
+  max-width: 780px;
+  pointer-events: auto;
+}
+
+.sparkle-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-pink-accent);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  margin-bottom: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--text-heading);
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+  margin-bottom: 4px;
+}
+
+.hero-title .gradient-text {
+  background: linear-gradient(135deg, #ff70a6 0%, #38b6ff 50%, #38b000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  animation: shimmer-text 5s infinite linear;
+}
+
+.hero-subtitle {
+  font-size: clamp(0.92rem, 2.2vw, 1.15rem);
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* 3D Scene Wrapper */
+.corn-3d-scene {
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Plants Cluster Container */
+.plants-cluster {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0px;
+  transform-style: preserve-3d;
+}
+
+/* Mascot Wrapper */
+.corn-mascot-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 25;
+  user-select: none;
+  transform-style: preserve-3d;
+}
+
+/* 🌱 Cute Baby Bean Companion Mascot */
+.baby-bean-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: -20px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 28;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+}
+
+.baby-bean-svg {
+  width: 95px;
+  height: 120px;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.18));
+  transform-origin: bottom center;
+  animation: baby-bean-bounce 3.6s infinite ease-in-out;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+
+.baby-bean-wrapper:hover .baby-bean-svg {
+  transform: scale(1.18) rotate(6deg);
+  filter: drop-shadow(0 12px 25px rgba(112, 224, 0, 0.6)) drop-shadow(0 0 15px rgba(255, 112, 166, 0.5));
+}
+
+.baby-bean-wrapper:active .baby-bean-svg {
+  transform: scale(0.92) rotate(-8deg);
+}
+
+.bean-sprout-leaves-anim {
+  animation: bean-leaves-wiggle 2.8s infinite ease-in-out alternate;
+}
+
+.bean-tendril-anim {
+  animation: bean-tendril-curl 3.2s infinite ease-in-out alternate;
+}
+
+/* Bean Speech Bubble */
+.bean-speech-bubble {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px) scale(0.85);
+  margin-bottom: 12px;
+  background: var(--panel-bg);
+  border: 2px solid var(--color-green-light);
+  border-radius: 18px;
+  padding: 8px 16px;
+  box-shadow: 0 8px 24px rgba(112, 224, 0, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  width: max-content;
+  max-width: 220px;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  pointer-events: auto;
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 35;
+}
+
+.bean-speech-bubble.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.bean-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0 8px;
+  border-style: solid;
+  border-color: var(--color-green-light) transparent transparent transparent;
+}
+
+.bean-burst-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Interactive Speech Bubble for Corn */
+.corn-speech-bubble {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 20px;
+  background: var(--panel-bg);
+  border: 2px solid var(--color-pink-accent);
+  border-radius: 22px;
+  padding: 12px 24px;
+  box-shadow: 0 12px 35px var(--color-pink-glow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  max-width: 340px;
+  text-align: center;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(15px) scale(0.9);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 30;
+}
+
+.corn-speech-bubble.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.corn-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px 10px 0 10px;
+  border-style: solid;
+  border-color: var(--color-pink-accent) transparent transparent transparent;
+}
+
+/* The SVG Corn Plant Character (Cute, Balanced Proportion) */
+.corn-plant-svg {
+  width: 230px;
+  height: 290px;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.18));
+  transform-origin: bottom center;
+  transition: transform 0.1s ease-out, filter 0.3s ease;
+}
+
+.corn-mascot-wrapper:hover .corn-plant-svg {
+  filter: drop-shadow(0 20px 40px rgba(255, 112, 166, 0.5)) drop-shadow(0 0 20px rgba(255, 209, 102, 0.6));
+}
+
+.corn-mascot-wrapper:active .corn-plant-svg {
+  transform: scale(0.95) rotate(-3deg);
+}
+
+/* Leaf Animation attachments */
+.corn-leaf-anim-left {
+  animation: corn-leaf-sway-mid-left 4s infinite ease-in-out;
+}
+.corn-leaf-anim-right {
+  animation: corn-leaf-sway-mid-right 4.5s infinite ease-in-out;
+}
+.corn-silk-anim {
+  animation: corn-hair-sway 3.5s infinite ease-in-out;
+}
+
+/* Click particle burst container */
+.mascot-burst-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.heart-particle {
+  position: absolute;
+  font-size: 24px;
+  pointer-events: none;
+  animation: float-heart-up 1.8s forwards ease-out;
+}
+
+/* ==========================================================================
+   GROUND & GARDEN MEADOW
+   ========================================================================== */
+.ground-meadow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: var(--bg-ground);
+  border-top-left-radius: 40% 30px;
+  border-top-right-radius: 40% 30px;
+  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.1);
+  z-index: 12;
+  transition: background 0.8s ease;
+  overflow: hidden;
+}
+
+/* Meadow Grass Blades & Flowers */
+.grass-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.flower-stem {
+  position: absolute;
+  bottom: 25px;
+  font-size: 24px;
+  animation: flower-sway 3s infinite ease-in-out alternate;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+/* Fairy Lights across meadow (Night Mode) */
+.fairy-lights {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  pointer-events: none;
+}
+
+.fairy-bulb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffd166;
+  box-shadow: 0 0 15px var(--fairy-light-glow);
+  opacity: var(--firefly-opacity);
+  animation: fairy-pulse 2s infinite alternate ease-in-out;
+}
+
+/* ==========================================================================
+   BOTTOM ACTION BAR & QUICK BUTTONS
+   ========================================================================== */
+.bottom-dock {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--panel-bg);
+  padding: 8px 16px;
+  border-radius: 40px;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 45;
+  max-width: 95vw;
+}
+
+.dock-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 25px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-bounce);
+  white-space: nowrap;
+}
+
+body[data-theme="night"] .dock-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.dock-btn:hover {
+  background: var(--color-pink-accent);
+  color: #fff;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 18px var(--color-pink-glow);
+}
+
+.dock-btn.primary {
+  background: linear-gradient(135deg, var(--color-pink-accent) 0%, #ff9ebb 100%);
+  color: #fff;
+  box-shadow: 0 4px 15px var(--color-pink-glow);
+}
+
+.dock-btn.primary:hover {
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 8px 24px var(--color-pink-glow);
+}
+
+/* ==========================================================================
+   SWEET BIRTHDAY MUSIC PLAYER WIDGET
+   ========================================================================== */
+.music-player-widget {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  z-index: 45;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: var(--transition-smooth);
+  max-width: 320px;
+}
+
+.vinyl-disc {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #1e293b;
+  border: 3px solid #ffd166;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.vinyl-disc.spinning {
+  animation: spin-vinyl 4s infinite linear;
+}
+
+.vinyl-center {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-pink-accent);
+  border: 2px solid #fff;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.track-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-artist {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mini-btn {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.mini-btn:hover {
+  background: rgba(255, 112, 166, 0.2);
+  color: var(--color-pink-accent);
+  transform: scale(1.15);
+}
+
+/* ==========================================================================
+   MODALS: POLAROID LIGHTBOX, ALBUM, CAKE, LETTER, WISHES
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 15, 30, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s ease;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  position: relative;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px;
+  transform: scale(0.85) translateY(20px);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-bounce);
+  z-index: 10;
+}
+
+.btn-close-modal:hover {
+  background: var(--color-pink-accent);
+  color: #fff;
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Polaroid Card in Modal */
+.polaroid-card {
+  background: #ffffff;
+  padding: 16px 16px 24px 16px;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transform: rotate(-1.5deg);
+  transition: transform 0.3s ease;
+  color: #1e293b;
+}
+
+.polaroid-card:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.polaroid-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 24px;
+  background: rgba(255, 225, 150, 0.7);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius: 2px;
+  z-index: 5;
+}
+
+.polaroid-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.polaroid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+video.polaroid-img {
+  object-fit: contain;
+  background: #000;
+}
+
+.polaroid-caption {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.polaroid-text {
+  font-family: var(--font-handwriting);
+  font-size: 1.6rem;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.polaroid-date {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.polaroid-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Album Gallery Modal & Filter Tabs */
+.album-filter-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px 0 6px 0;
+}
+
+.album-filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.album-filter-btn:hover,
+.album-filter-btn.active {
+  background: var(--color-pink-accent);
+  color: #fff;
+  border-color: var(--color-pink-accent);
+  box-shadow: 0 4px 12px var(--color-pink-glow);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid var(--panel-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-bounce);
+  background: #0f172a;
+}
+
+.gallery-item:hover {
+  transform: scale(1.06) rotate(2deg);
+  border-color: var(--color-pink-accent);
+  box-shadow: 0 8px 20px var(--color-pink-glow);
+  z-index: 5;
+}
+
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-video-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+
+/* Birthday Cake Experience Modal */
+.cake-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.cake-container {
+  position: relative;
+  width: 220px;
+  height: 200px;
+  margin: 20px 0;
+  cursor: pointer;
+}
+
+.candle {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 45px;
+  background: repeating-linear-gradient(45deg, #ff70a6, #ff70a6 6px, #ffffff 6px, #ffffff 12px);
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 5;
+}
+
+.candle-flame {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 24px;
+  background: radial-gradient(ellipse at bottom, #fff 0%, #ffd166 40%, #ff5400 80%);
+  border-radius: 50% 50% 20% 20%;
+  box-shadow: 0 0 20px #ffd166, 0 0 40px #ff70a6;
+  animation: flame-flicker 1.2s infinite alternate ease-in-out;
+  transform-origin: bottom center;
+}
+
+.candle.blown-out .candle-flame {
+  display: none;
+}
+
+.candle.blown-out::after {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 20px;
+  background: rgba(180, 180, 180, 0.6);
+  border-radius: 50%;
+  animation: smoke-puff 1.5s forwards ease-out;
+}
+
+.cake-tier-top {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 55px;
+  background: #ffe5ec;
+  border-radius: 12px;
+  border-bottom: 8px solid #ffcad4;
+  box-shadow: inset 0 6px 0 #fff;
+}
+
+.cake-tier-bottom {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 190px;
+  height: 75px;
+  background: #fbf8cc;
+  border-radius: 16px;
+  border-bottom: 10px solid #f7d070;
+  box-shadow: inset 0 8px 0 #fff, 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.cake-strawberry {
+  position: absolute;
+  font-size: 18px;
+  top: -12px;
+}
+
+/* Birthday Letter Modal */
+.letter-paper {
+  background: #fffdf7;
+  border-radius: 18px;
+  padding: 30px;
+  color: #2c3e50;
+  border: 1px solid #fae8d4;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.letter-header {
+  font-family: var(--font-handwriting);
+  font-size: 2.2rem;
+  color: #ff70a6;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.letter-body {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #334155;
+}
+
+.letter-body p {
+  margin-bottom: 14px;
+}
+
+.letter-signature {
+  font-family: var(--font-handwriting);
+  font-size: 1.8rem;
+  text-align: right;
+  margin-top: 24px;
+  color: #38b000;
+}
+
+/* Wishing Star / Lanterns */
+.wish-input-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.wish-input {
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: 25px;
+  border: 2px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.wish-input:focus {
+  border-color: var(--color-pink-accent);
+  box-shadow: 0 0 15px var(--color-pink-glow);
+}
+
+.btn-wish-submit {
+  padding: 12px 24px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(135deg, var(--color-pink-accent), #38b6ff);
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: var(--transition-bounce);
+}
+
+.btn-wish-submit:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px var(--color-pink-glow);
+}
+
+.wishes-stream {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.wish-bubble {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 10px 16px;
+  border-radius: 15px;
+  border-left: 4px solid var(--color-pink-accent);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   💌 1. MÀN HÌNH MỞ QUÀ BÍ MẬT (3D INTRO ENVELOPE)
+   ========================================================================== */
+.intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, rgba(235, 251, 238, 0.96) 0%, rgba(255, 226, 236, 0.96) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+[data-theme="night"] .intro-overlay {
+  background: radial-gradient(circle at center, rgba(15, 23, 42, 0.96) 0%, rgba(2, 6, 23, 0.98) 100%);
+}
+
+.intro-overlay.fade-out {
+  opacity: 0;
+  transform: scale(1.08);
+  pointer-events: none;
+}
+
+.intro-content {
+  text-align: center;
+  max-width: 560px;
+  padding: 24px;
+  animation: float-intro 4s ease-in-out infinite;
+}
+
+@keyframes float-intro {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.intro-badge {
+  display: inline-block;
+  padding: 8px 22px;
+  background: linear-gradient(135deg, var(--color-pink-accent), #38b6ff);
+  color: #fff;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: 0 4px 15px rgba(255, 112, 166, 0.4);
+  margin-bottom: 16px;
+}
+
+.intro-greeting {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text-heading);
+  margin-bottom: 12px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.intro-hint {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+/* 3D Interactive Envelope */
+.envelope-wrapper {
+  position: relative;
+  width: 280px;
+  height: 180px;
+  margin: 0 auto 30px;
+  cursor: pointer;
+  perspective: 800px;
+}
+
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ffd166, #ff70a6);
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(255, 112, 166, 0.35);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.envelope:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 45px rgba(255, 112, 166, 0.5);
+}
+
+.envelope-pocket {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 140px solid #ffa3b5;
+  border-right: 140px solid #ffa3b5;
+  border-bottom: 100px solid #ff8ea5;
+  border-top: 80px solid transparent;
+  border-radius: 0 0 12px 12px;
+  z-index: 3;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-top: 100px solid #ff70a6;
+  transform-origin: top center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 4;
+}
+
+.envelope.opened .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope-letter {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  width: 250px;
+  height: 155px;
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+
+.envelope.opened .envelope-letter {
+  transform: translateY(-80px);
+}
+
+.letter-inner-heart {
+  font-size: 2rem;
+  animation: heart-beat-intro 1.5s infinite;
+}
+
+@keyframes heart-beat-intro {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.letter-inner-text {
+  font-family: var(--font-handwriting);
+  font-size: 1.35rem;
+  color: #ff5376;
+  font-weight: 700;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.wax-seal-btn {
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, #ffd166, #e76f51);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 14px rgba(231, 111, 81, 0.4);
+  z-index: 5;
+  transition: transform 0.3s ease, opacity 0.4s ease;
+}
+
+.wax-seal-btn::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.7);
+  animation: spin-seal 10s linear infinite;
+}
+
+@keyframes spin-seal {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.envelope.opened .wax-seal-btn {
+  transform: translate(-50%, -100%) scale(0);
+  opacity: 0;
+}
+
+.intro-open-btn {
+  padding: 14px 36px;
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #ff70a6 0%, #38b6ff 50%, #38b000 100%);
+  background-size: 200% 200%;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 112, 166, 0.45);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.intro-open-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 35px rgba(255, 112, 166, 0.6);
+}
+
+.intro-open-btn:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   🐝 🦋 WHIMSICAL FLYING BEES & BUTTERFLIES (Garden Companions)
+   ========================================================================== */
+.flying-creatures-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 38;
+  overflow: hidden;
+}
+
+.creature {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+  transition: filter 0.25s ease;
+}
+
+.creature:hover {
+  filter: drop-shadow(0 0 16px rgba(255, 112, 166, 0.85)) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.3));
+}
+
+.creature-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+/* 🐝 Bees */
+.bee-1 {
+  width: 58px;
+  height: 48px;
+  animation: bee-flight-1 16s infinite ease-in-out;
+}
+
+.bee-2 {
+  width: 50px;
+  height: 42px;
+  animation: bee-flight-2 20s infinite ease-in-out;
+}
+
+.bee-svg .wing-left {
+  transform-box: view-box;
+  transform-origin: 22px 12px;
+  animation: bee-wing-flutter 0.12s infinite alternate ease-in-out;
+}
+
+.bee-svg .wing-right {
+  transform-box: view-box;
+  transform-origin: 33px 10px;
+  animation: bee-wing-flutter 0.12s infinite alternate-reverse ease-in-out;
+}
+
+/* 🦋 Butterflies */
+.butterfly {
+  width: 56px;
+  height: 48px;
+}
+
+.butterfly-1 {
+  animation: butterfly-flight-1 22s infinite ease-in-out;
+}
+
+.butterfly-2 {
+  animation: butterfly-flight-2 18s infinite ease-in-out;
+}
+
+.butterfly-3 {
+  animation: butterfly-flight-3 24s infinite ease-in-out;
+}
+
+.butterfly-svg .butterfly-wing-left {
+  transform-box: view-box;
+  transform-origin: 35px 30px;
+  animation: butterfly-flap-left 0.28s infinite alternate ease-in-out;
+}
+
+.butterfly-svg .butterfly-wing-right {
+  transform-box: view-box;
+  transform-origin: 35px 30px;
+  animation: butterfly-flap-right 0.28s infinite alternate ease-in-out;
+}

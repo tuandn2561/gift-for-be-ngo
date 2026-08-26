@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Chúc Mừng Sinh Nhật Bé Hạt Ngô - Ngô Thị Ngọc Trinh 🌽✨</title>
+  <meta name="description" content="Món quà sinh nhật đặc biệt và ngọt ngào dành tặng Ngô Thị Ngọc Trinh (Bé hạt ngô) với những kỷ niệm đẹp và giai điệu du dương.">
+  <meta name="theme-color" content="#38b000">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌽</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@600;700&family=Dancing+Script:wght@700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/animations.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body data-theme="day">
+
+  <!-- =========================================================
+       💌 1. MÀN HÌNH MỞ QUÀ BÍ MẬT (3D INTRO ENVELOPE)
+       ========================================================= -->
+  <div class="intro-overlay" id="intro-overlay">
+    <div class="intro-content">
+      <div class="intro-badge" id="intro-badge-text">Special Birthday Gift 💖</div>
+      <h1 class="intro-greeting" id="intro-greeting-text">Gửi Ngô Thị Ngọc Trinh (Bé Hạt Ngô) ✨</h1>
+      <p class="intro-hint" id="intro-hint-text">
+        Anh có một món quà bí mật muốn dành tặng em nhân ngày sinh nhật đặc biệt này. Chạm nhẹ vào phong bì để mở ra nhé! 💌
+      </p>
+
+      <!-- 3D Interactive Envelope -->
+      <div class="envelope-wrapper" id="intro-envelope">
+        <div class="envelope">
+          <div class="envelope-flap"></div>
+          <div class="wax-seal-btn" id="intro-wax-seal">🌽</div>
+          <div class="envelope-letter">
+            <div class="letter-inner-heart">💖</div>
+            <div class="letter-inner-text">Happy Birthday Ngọc Trinh ✨</div>
+          </div>
+          <div class="envelope-pocket"></div>
+        </div>
+      </div>
+
+      <button class="intro-open-btn" id="btn-open-envelope">
+        <span>Mở Hộp Quà Bí Mật 🎁</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Canvas for Starfield (Night) & Celebratory Fireworks -->
+  <canvas id="star-canvas"></canvas>
+  <canvas id="fireworks-canvas"></canvas>
+
+  <!-- Top Navigation / Header with Music Player & Controls -->
+  <header class="site-header">
+    <div class="brand-badge" id="brand-badge-click">
+      <span class="brand-icon">🌽</span>
+      <div class="brand-info">
+        <h1>Bé Hạt Ngô <span style="color: var(--color-pink-accent);">✨</span></h1>
+        <p>Ngô Thị Ngọc Trinh's Birthday</p>
+      </div>
+    </div>
+
+    <!-- Music Player Widget in Top Header -->
+    <div class="top-music-player" id="music-player-widget">
+      <div class="vinyl-disc" id="vinyl-disc">
+        <div class="vinyl-center"></div>
+      </div>
+      <div class="player-info">
+        <div class="track-title" id="player-track-title">Happy Birthday Music Box</div>
+        <div class="track-artist" id="player-track-artist">Hộp Nhạc Kỷ Niệm ✨</div>
+      </div>
+      <div class="player-controls">
+        <button class="player-btn btn-prev" id="btn-prev-music" title="Bài trước 🎵" aria-label="Bài trước">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="5" x2="5" y2="19" />
+            <polygon points="19,5 9,12 19,19" fill="currentColor" />
+          </svg>
+        </button>
+        <button class="player-btn btn-play-main" id="btn-play-music" title="Phát / Tạm dừng" aria-label="Phát / Tạm dừng">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 19,12 6,20"/></svg>
+        </button>
+        <button class="player-btn btn-next" id="btn-next-music" title="Bài tiếp theo 🎵" aria-label="Bài tiếp theo">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="5" x2="19" y2="19" />
+            <polygon points="5,5 15,12 5,19" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+      <!-- Volume Adjustment Slider -->
+      <div class="player-volume-group">
+        <span class="volume-icon" id="player-volume-icon">🔊</span>
+        <input type="range" class="volume-slider" id="player-volume-slider" min="0" max="1" step="0.01" value="0.55" aria-label="Điều chỉnh âm lượng">
+      </div>
+    </div>
+
+    <div class="top-controls">
+      <!-- Rain toggle button -->
+      <button class="btn-icon" id="btn-rain-toggle" aria-label="Bật/Tắt Mưa Ký Ức">
+        <span class="rain-icon">🌧️</span>
+        <span class="tooltip">Tạm dừng / Tiếp tục Mưa</span>
+      </button>
+
+      <!-- Day / Night Mode toggle -->
+      <button class="btn-icon" id="btn-theme-toggle" aria-label="Đổi giao diện Ngày/Đêm">
+        <span class="theme-icon">🌙</span>
+        <span class="tooltip">Đổi sang Bầu Trời Đêm</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sky Environment: Sun, Moon, Clouds & Rain -->
+  <div class="sky-container">
+    <!-- Sun (Day) -->
+    <div class="celestial-body sun"></div>
+    <!-- Moon (Night) -->
+    <div class="celestial-body moon"></div>
+
+    <!-- 24 Animated Clouds spanning the sky at varied depths and heights -->
+    <div class="cloud-system">
+      <!-- Row 1: Upper Layer Clouds -->
+      <div class="cloud cloud-1" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-2" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-3" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-4" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-5" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-6" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+
+      <!-- Row 2: Mid Layer Clouds -->
+      <div class="cloud cloud-7" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-8" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-9" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-10" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-11" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-12" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+
+      <!-- Row 3: Soft Background Clouds -->
+      <div class="cloud cloud-13" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-14" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-15" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-16" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-17" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-18" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+
+      <!-- Row 4: Fluffy Accent Clouds -->
+      <div class="cloud cloud-19" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-20" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-21" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-22" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-23" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+      <div class="cloud cloud-24" onclick="if(window.birthdayAudio) window.birthdayAudio.playPopSound();"><div class="cloud-face"><div class="cloud-blush"></div><div class="cloud-eye"></div><div class="cloud-smile"></div><div class="cloud-eye"></div><div class="cloud-blush"></div></div></div>
+    </div>
+  </div>
+
+  <!-- Raindrops containing images from /media -->
+  <div class="rain-container" id="rain-container"></div>
+
+  <!-- Main Stage: Greeting & Corn Mascot -->
+  <main class="main-stage">
+    <!-- Centered Birthday Greeting (Clear separation above the mascot) -->
+    <div class="hero-greeting">
+      <div class="sparkle-badge">
+        <span>🎉 24/08/2002 • 24 TUỔI RỰC RỠ 🎂</span>
+      </div>
+      <h2 class="hero-title">
+        Chúc Mừng Sinh Nhật <br>
+        <span class="gradient-text">Bé Hạt Ngô</span> 🌽
+      </h2>
+      <p class="hero-subtitle">Món quà yêu thương dành tặng <strong>Ngô Thị Ngọc Trinh</strong> (Bé Hạt Ngô)</p>
+    </div>
+
+    <!-- Centerpiece 3D Garden Scene: Cute Corn Plant & Baby Bean Companion -->
+    <div class="corn-3d-scene">
+      <div class="plants-cluster">
+        <!-- 🌽 Main Corn Mascot ("Bé Hạt Ngô") -->
+        <div class="corn-mascot-wrapper" id="corn-mascot">
+          <!-- Interactive Speech Bubble -->
+          <div class="corn-speech-bubble" id="corn-speech-bubble">
+            Chúc mừng sinh nhật chị Ngọc Trinh siêu cute! 🌽✨
+          </div>
+
+          <!-- Particle burst on click / hover -->
+          <div class="mascot-burst-container" id="mascot-burst-container"></div>
+
+          <!-- Handcrafted Ultra-Cute Chibi Corn Plant SVG -->
+          <svg class="corn-plant-svg" id="corn-plant-svg" viewBox="0 0 280 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- 3D Shading Gradients -->
+              <radialGradient id="corn-cob-3d" cx="35%" cy="30%" r="75%">
+                <stop offset="0%" stop-color="#fff8db" />
+                <stop offset="35%" stop-color="#ffd166" />
+                <stop offset="75%" stop-color="#f4a261" />
+                <stop offset="100%" stop-color="#e76f51" />
+              </radialGradient>
+
+              <linearGradient id="leaf-left-3d" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#9ef01a" />
+                <stop offset="40%" stop-color="#70e000" />
+                <stop offset="100%" stop-color="#2d6a4f" />
+              </linearGradient>
+
+              <linearGradient id="leaf-right-3d" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#9ef01a" />
+                <stop offset="40%" stop-color="#70e000" />
+                <stop offset="100%" stop-color="#2d6a4f" />
+              </linearGradient>
+
+              <linearGradient id="hat-grad-3d" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff70a6" />
+                <stop offset="50%" stop-color="#38b6ff" />
+                <stop offset="100%" stop-color="#ffd166" />
+              </linearGradient>
+
+              <filter id="glow-3d" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Plant Roots & Stem Base -->
+            <g id="corn-roots">
+              <path d="M140 315 C115 322, 90 328, 60 332" stroke="#2d6a4f" stroke-width="5" stroke-linecap="round"/>
+              <path d="M140 315 C165 322, 190 328, 220 332" stroke="#2d6a4f" stroke-width="5" stroke-linecap="round"/>
+              <path d="M140 315 L140 336" stroke="#2d6a4f" stroke-width="6" stroke-linecap="round"/>
+            </g>
+
+            <!-- Thick Main Stem -->
+            <path d="M140 320 Q135 240 140 160" stroke="#40916c" stroke-width="16" stroke-linecap="round"/>
+            <path d="M138 318 Q134 240 138 160" stroke="#74c69d" stroke-width="6" stroke-linecap="round"/>
+
+            <!-- 3D Lower Left Leaf (Layer 1) -->
+            <g class="corn-leaf-anim-left" style="transform-origin: 135px 270px;">
+              <path d="M135 270 C80 270, 20 238, 8 188 C38 195, 96 220, 135 258 Z" fill="url(#leaf-left-3d)" filter="drop-shadow(0 6px 10px rgba(0,0,0,0.15))"/>
+              <path d="M135 270 Q75 235 12 192" stroke="#b5e48c" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- 3D Lower Right Leaf (Layer 1) -->
+            <g class="corn-leaf-anim-right" style="transform-origin: 145px 255px;">
+              <path d="M145 255 C195 255, 260 222, 272 172 C242 178, 185 205, 145 242 Z" fill="url(#leaf-right-3d)" filter="drop-shadow(0 6px 10px rgba(0,0,0,0.15))"/>
+              <path d="M145 255 Q205 220 268 176" stroke="#b5e48c" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Back Husks (Layer 2) -->
+            <path d="M100 220 C70 155, 88 80, 110 50 C102 110, 120 185, 134 225 Z" fill="#2d6a4f" opacity="0.95"/>
+            <path d="M180 220 C210 155, 192 80, 170 50 C178 110, 160 185, 146 225 Z" fill="#2d6a4f" opacity="0.95"/>
+
+            <!-- 3D Corn Cob Body (Layer 3) -->
+            <g id="corn-cob-body-3d">
+              <!-- Shadow under cob -->
+              <ellipse cx="140" cy="155" rx="55" ry="88" fill="url(#corn-cob-3d)" filter="drop-shadow(0 14px 28px rgba(0,0,0,0.22))"/>
+
+              <!-- 3D Kernel Bands -->
+              <ellipse cx="140" cy="100" rx="44" ry="18" fill="#ffeaa7" opacity="0.85"/>
+              <ellipse cx="140" cy="132" rx="51" ry="20" fill="#ffeaa7" opacity="0.85"/>
+              <ellipse cx="140" cy="164" rx="52" ry="20" fill="#ffeaa7" opacity="0.85"/>
+              <ellipse cx="140" cy="196" rx="46" ry="18" fill="#ffeaa7" opacity="0.85"/>
+
+              <!-- Individual Shiny 3D Kernels -->
+              <g fill="#f39c12">
+                <circle cx="120" cy="118" r="4.5"/>
+                <circle cx="140" cy="118" r="4.5"/>
+                <circle cx="160" cy="118" r="4.5"/>
+                <circle cx="112" cy="148" r="4.5"/>
+                <circle cx="140" cy="148" r="4.5"/>
+                <circle cx="168" cy="148" r="4.5"/>
+                <circle cx="120" cy="178" r="4.5"/>
+                <circle cx="140" cy="178" r="4.5"/>
+                <circle cx="160" cy="178" r="4.5"/>
+              </g>
+              <!-- Kernel Gloss Highlights -->
+              <g fill="#ffffff" opacity="0.7">
+                <circle cx="119" cy="116" r="1.8"/>
+                <circle cx="139" cy="116" r="1.8"/>
+                <circle cx="159" cy="116" r="1.8"/>
+                <circle cx="111" cy="146" r="1.8"/>
+                <circle cx="139" cy="146" r="1.8"/>
+                <circle cx="167" cy="146" r="1.8"/>
+              </g>
+            </g>
+
+            <!-- Front Hugging Husks (Layer 4) -->
+            <path d="M92 225 C75 168, 92 105, 115 72 C100 125, 110 180, 130 228 Z" fill="url(#leaf-left-3d)" stroke="#38b000" stroke-width="2.5"/>
+            <path d="M188 225 C205 168, 188 105, 165 72 C180 125, 170 180, 150 228 Z" fill="url(#leaf-right-3d)" stroke="#38b000" stroke-width="2.5"/>
+
+            <!-- 3D Silk Hair Tufts -->
+            <g class="corn-silk-anim" style="transform-origin: 140px 62px;">
+              <path d="M130 62 Q118 40 108 30" stroke="#d4a373" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M140 60 Q140 32 135 18" stroke="#d4a373" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M150 62 Q162 40 172 28" stroke="#d4a373" stroke-width="3.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- 3D Party Birthday Hat -->
+            <g id="corn-party-hat-3d">
+              <polygon points="140,4 112,58 168,58" fill="url(#hat-grad-3d)" filter="drop-shadow(0 6px 12px rgba(0,0,0,0.25))"/>
+              <!-- Hat Stripes -->
+              <path d="M140 4 L126 32 L154 32 Z" fill="#ffd166"/>
+              <path d="M140 4 L133 18 L147 18 Z" fill="#ff70a6"/>
+              <!-- Big Sparkling Pom-Pom -->
+              <circle cx="140" cy="4" r="8" fill="#ffd166" filter="url(#glow-3d)"/>
+              <text x="133" y="52" font-size="14" fill="#fff">⭐</text>
+            </g>
+
+            <!-- Ultra-Cute Anime Face -->
+            <g id="corn-face-3d">
+              <!-- Left Eye -->
+              <ellipse cx="118" cy="142" rx="8" ry="10" fill="#1e293b"/>
+              <circle cx="115" cy="138" r="3.5" fill="#ffffff"/>
+              <circle cx="121" cy="145" r="1.8" fill="#ffffff"/>
+
+              <!-- Right Eye -->
+              <ellipse cx="162" cy="142" rx="8" ry="10" fill="#1e293b"/>
+              <circle cx="159" cy="138" r="3.5" fill="#ffffff"/>
+              <circle cx="165" cy="145" r="1.8" fill="#ffffff"/>
+
+              <!-- Sweet Blushing Cheeks -->
+              <ellipse cx="106" cy="156" rx="9.5" ry="6" fill="#ff70a6" opacity="0.8"/>
+              <ellipse cx="174" cy="156" rx="9.5" ry="6" fill="#ff70a6" opacity="0.8"/>
+
+              <!-- Cute Happy Smile -->
+              <path d="M130 154 Q140 165 150 154" stroke="#d90429" stroke-width="3.5" stroke-linecap="round" fill="#ffcad4"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- 🌱 Cute Baby Bean Plant ("Bé Hạt Đậu Nho Nhỏ") Companion -->
+        <div class="baby-bean-wrapper" id="baby-bean-mascot" title="Bé Hạt Đậu Nho Nhỏ">
+          <!-- Bean Speech Bubble -->
+          <div class="bean-speech-bubble" id="bean-speech-bubble">
+            Bé Đậu chúc mừng sinh nhật chị Ngọc Trinh! 🌱💖
+          </div>
+
+          <!-- Bean Click Particle Container -->
+          <div class="bean-burst-container" id="bean-burst-container"></div>
+
+          <!-- Baby Bean Sprout SVG -->
+          <svg class="baby-bean-svg" id="baby-bean-svg" viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="bean-pod-grad" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#ebfbee" />
+                <stop offset="30%" stop-color="#9ef01a" />
+                <stop offset="70%" stop-color="#70e000" />
+                <stop offset="100%" stop-color="#2d6a4f" />
+              </radialGradient>
+              <linearGradient id="bean-leaf-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#d8f3dc" />
+                <stop offset="40%" stop-color="#9ef01a" />
+                <stop offset="80%" stop-color="#70e000" />
+                <stop offset="100%" stop-color="#1b4332" />
+              </linearGradient>
+            </defs>
+
+            <!-- Tiny Vine Roots in meadow -->
+            <path d="M80 185 C65 192, 50 195, 35 198" stroke="#2d6a4f" stroke-width="4" stroke-linecap="round"/>
+            <path d="M80 185 C95 192, 110 195, 125 198" stroke="#2d6a4f" stroke-width="4" stroke-linecap="round"/>
+
+            <!-- Curled Little Vine Stem -->
+            <path d="M80 188 Q75 145 80 115" stroke="#38b000" stroke-width="8" stroke-linecap="round"/>
+            <path d="M78 185 Q74 145 78 115" stroke="#9ef01a" stroke-width="2.5" stroke-linecap="round"/>
+
+            <!-- Cute Spring Tendril (Tua cuốn đậu) -->
+            <path class="bean-tendril-anim" d="M82 135 C105 130, 115 110, 102 98 C92 88, 76 96, 85 108 C90 115, 102 114, 108 105" stroke="#70e000" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+            <!-- Twin Sprout Heart Leaves (Mầm lá đậu đôi) -->
+            <g class="bean-sprout-leaves-anim" style="transform-origin: 80px 65px;">
+              <!-- Left Sprout Leaf -->
+              <path d="M80 65 C60 45, 30 50, 42 75 C52 95, 78 72, 80 65 Z" fill="url(#bean-leaf-grad)" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.15))"/>
+              <path d="M80 65 Q55 60, 45 72" stroke="#d8f3dc" stroke-width="1.8" stroke-linecap="round"/>
+              <!-- Right Sprout Leaf -->
+              <path d="M80 65 C100 45, 130 50, 118 75 C108 95, 82 72, 80 65 Z" fill="url(#bean-leaf-grad)" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.15))"/>
+              <path d="M80 65 Q105 60, 115 72" stroke="#d8f3dc" stroke-width="1.8" stroke-linecap="round"/>
+              <!-- Mini Blossom / Flower Bow on Sprout Head -->
+              <circle cx="80" cy="65" r="5" fill="#ff70a6"/>
+              <circle cx="80" cy="65" r="2.2" fill="#ffffff"/>
+            </g>
+
+            <!-- Plump Round Baby Bean Body (Bé Hạt Đậu Chibi) -->
+            <g id="bean-character-body">
+              <ellipse cx="80" cy="115" rx="34" ry="42" fill="url(#bean-pod-grad)" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.22))"/>
+              <!-- Bean Highlights & Indentations (Đường cong hạt đậu) -->
+              <path d="M68 85 Q80 92 92 85" stroke="#d8f3dc" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+              <ellipse cx="68" cy="98" rx="4" ry="6" fill="#fff" opacity="0.6" transform="rotate(-20 68 98)"/>
+
+              <!-- Ultra-Cute Chibi Face -->
+              <!-- Left Eye -->
+              <ellipse cx="69" cy="112" rx="4.5" ry="6" fill="#1e293b"/>
+              <circle cx="67.5" cy="109.5" r="2" fill="#fff"/>
+              <circle cx="70.5" cy="113.5" r="1" fill="#fff"/>
+
+              <!-- Right Eye -->
+              <ellipse cx="91" cy="112" rx="4.5" ry="6" fill="#1e293b"/>
+              <circle cx="89.5" cy="109.5" r="2" fill="#fff"/>
+              <circle cx="92.5" cy="113.5" r="1" fill="#fff"/>
+
+              <!-- Sweet Blushing Cheeks -->
+              <ellipse cx="61" cy="120" rx="5.5" ry="3.5" fill="#ff70a6" opacity="0.85"/>
+              <ellipse cx="99" cy="120" rx="5.5" ry="3.5" fill="#ff70a6" opacity="0.85"/>
+
+              <!-- Tiny Happy Smile -->
+              <path d="M76 120 Q80 126 84 120" stroke="#d90429" stroke-width="2.2" stroke-linecap="round" fill="#ffcad4"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 🐝🦋 Whimsical Flying Creatures (Bees & Butterflies roaming the garden) -->
+  <div class="flying-creatures-container" id="flying-creatures">
+    <!-- Bee 1: Roaming Left to Center -->
+    <div class="creature bee bee-1" title="Chú Ong Nhỏ 🐝">
+      <svg viewBox="0 0 60 50" class="creature-svg bee-svg">
+        <g class="bee-wings-group">
+          <ellipse cx="22" cy="12" rx="13" ry="8.5" fill="#e0f2fe" stroke="#38b6ff" stroke-width="1.2" opacity="0.9" class="wing wing-left" />
+          <ellipse cx="33" cy="10" rx="11" ry="7.5" fill="#bae6fd" stroke="#38b6ff" stroke-width="1.2" opacity="0.9" class="wing wing-right" />
+        </g>
+        <ellipse cx="30" cy="28" rx="18" ry="14" fill="#ffd166" />
+        <path d="M25 15 Q28 28 25 41" stroke="#2b2d42" stroke-width="4.5" stroke-linecap="round" fill="none" />
+        <path d="M34 16 Q37 28 34 40" stroke="#2b2d42" stroke-width="4.5" stroke-linecap="round" fill="none" />
+        <polygon points="12,28 6,25 6,31" fill="#2b2d42" />
+        <ellipse cx="41" cy="25" rx="3.5" ry="4.5" fill="#1e293b" />
+        <circle cx="42.5" cy="23.5" r="1.5" fill="#ffffff" />
+        <ellipse cx="39" cy="32" rx="3.5" ry="2.2" fill="#ff70a6" opacity="0.85" />
+        <path d="M43 29 Q45 32 47 29" stroke="#d90429" stroke-width="1.8" stroke-linecap="round" fill="none" />
+        <path d="M42 18 Q45 10 50 11" stroke="#2b2d42" stroke-width="2" stroke-linecap="round" fill="none" />
+        <circle cx="50" cy="11" r="2.2" fill="#ff70a6" />
+      </svg>
+    </div>
+
+    <!-- Bee 2: Roaming Near Plants -->
+    <div class="creature bee bee-2" title="Chú Ong Chăm Chỉ 🐝">
+      <svg viewBox="0 0 60 50" class="creature-svg bee-svg">
+        <g class="bee-wings-group">
+          <ellipse cx="22" cy="12" rx="13" ry="8.5" fill="#e0f2fe" stroke="#38b6ff" stroke-width="1.2" opacity="0.9" class="wing wing-left" />
+          <ellipse cx="33" cy="10" rx="11" ry="7.5" fill="#bae6fd" stroke="#38b6ff" stroke-width="1.2" opacity="0.9" class="wing wing-right" />
+        </g>
+        <ellipse cx="30" cy="28" rx="18" ry="14" fill="#ffd166" />
+        <path d="M25 15 Q28 28 25 41" stroke="#2b2d42" stroke-width="4.5" stroke-linecap="round" fill="none" />
+        <path d="M34 16 Q37 28 34 40" stroke="#2b2d42" stroke-width="4.5" stroke-linecap="round" fill="none" />
+        <polygon points="12,28 6,25 6,31" fill="#2b2d42" />
+        <ellipse cx="41" cy="25" rx="3.5" ry="4.5" fill="#1e293b" />
+        <circle cx="42.5" cy="23.5" r="1.5" fill="#ffffff" />
+        <ellipse cx="39" cy="32" rx="3.5" ry="2.2" fill="#ff70a6" opacity="0.85" />
+        <path d="M43 29 Q45 32 47 29" stroke="#d90429" stroke-width="1.8" stroke-linecap="round" fill="none" />
+        <path d="M42 18 Q45 10 50 11" stroke="#2b2d42" stroke-width="2" stroke-linecap="round" fill="none" />
+        <circle cx="50" cy="11" r="2.2" fill="#ffd166" />
+      </svg>
+    </div>
+
+    <!-- Butterfly 1: Pastel Pink (3D Flutter) -->
+    <div class="creature butterfly butterfly-1" title="Bướm Hồng Xinh 🦋">
+      <svg viewBox="0 0 70 60" class="creature-svg butterfly-svg">
+        <defs>
+          <linearGradient id="bf1-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff70a6" />
+            <stop offset="50%" stop-color="#ff9ebb" />
+            <stop offset="100%" stop-color="#ffd166" />
+          </linearGradient>
+          <linearGradient id="bf1-grad-sub" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff5376" />
+            <stop offset="100%" stop-color="#ff70a6" />
+          </linearGradient>
+        </defs>
+        <g class="butterfly-wing-left">
+          <path d="M35 30 C22 6, 0 10, 5 34 C9 44, 25 38, 35 30 Z" fill="url(#bf1-grad)" />
+          <circle cx="16" cy="22" r="4.5" fill="#ffffff" opacity="0.85" />
+          <circle cx="11" cy="30" r="2.8" fill="#ffd166" opacity="0.9" />
+          <path d="M35 32 C18 38, 6 46, 14 56 C24 62, 34 46, 35 32 Z" fill="url(#bf1-grad-sub)" />
+          <circle cx="20" cy="48" r="3" fill="#ffffff" opacity="0.85" />
+        </g>
+        <g class="butterfly-wing-right">
+          <path d="M35 30 C48 6, 70 10, 65 34 C61 44, 45 38, 35 30 Z" fill="url(#bf1-grad)" />
+          <circle cx="54" cy="22" r="4.5" fill="#ffffff" opacity="0.85" />
+          <circle cx="59" cy="30" r="2.8" fill="#ffd166" opacity="0.9" />
+          <path d="M35 32 C52 38, 64 46, 56 56 C46 62, 36 46, 35 32 Z" fill="url(#bf1-grad-sub)" />
+          <circle cx="50" cy="48" r="3" fill="#ffffff" opacity="0.85" />
+        </g>
+        <ellipse cx="35" cy="33" rx="3.2" ry="14" fill="#2b2d42" />
+        <circle cx="35" cy="18" r="4.2" fill="#2b2d42" />
+        <path d="M34 16 Q27 6 22 8" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round" fill="none" />
+        <circle cx="22" cy="8" r="2.2" fill="#ff70a6" />
+        <path d="M36 16 Q43 6 48 8" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round" fill="none" />
+        <circle cx="48" cy="8" r="2.2" fill="#ff70a6" />
+      </svg>
+    </div>
+
+    <!-- Butterfly 2: Sky Blue (3D Flutter) -->
+    <div class="creature butterfly butterfly-2" title="Bướm Lam Mộng Mơ 🦋">
+      <svg viewBox="0 0 70 60" class="creature-svg butterfly-svg">
+        <defs>
+          <linearGradient id="bf2-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#38b6ff" />
+            <stop offset="60%" stop-color="#70e000" />
+            <stop offset="100%" stop-color="#a0c4ff" />
+          </linearGradient>
+        </defs>
+        <g class="butterfly-wing-left">
+          <path d="M35 30 C22 6, 0 10, 5 34 C9 44, 25 38, 35 30 Z" fill="url(#bf2-grad)" />
+          <circle cx="16" cy="22" r="4.5" fill="#ffffff" opacity="0.85" />
+          <circle cx="11" cy="30" r="2.8" fill="#70e000" opacity="0.9" />
+          <path d="M35 32 C18 38, 6 46, 14 56 C24 62, 34 46, 35 32 Z" fill="#38b6ff" />
+          <circle cx="20" cy="48" r="3" fill="#ffffff" opacity="0.85" />
+        </g>
+        <g class="butterfly-wing-right">
+          <path d="M35 30 C48 6, 70 10, 65 34 C61 44, 45 38, 35 30 Z" fill="url(#bf2-grad)" />
+          <circle cx="54" cy="22" r="4.5" fill="#ffffff" opacity="0.85" />
+          <circle cx="59" cy="30" r="2.8" fill="#70e000" opacity="0.9" />
+          <path d="M35 32 C52 38, 64 46, 56 56 C46 62, 36 46, 35 32 Z" fill="#38b6ff" />
+          <circle cx="50" cy="48" r="3" fill="#ffffff" opacity="0.85" />
+        </g>
+        <ellipse cx="35" cy="33" rx="3.2" ry="14" fill="#2b2d42" />
+        <circle cx="35" cy="18" r="4.2" fill="#2b2d42" />
+        <path d="M34 16 Q27 6 22 8" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round" fill="none" />
+        <circle cx="22" cy="8" r="2.2" fill="#38b6ff" />
+        <path d="M36 16 Q43 6 48 8" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round" fill="none" />
+        <circle cx="48" cy="8" r="2.2" fill="#38b6ff" />
+      </svg>
+    </div>
+
+    <!-- Butterfly 3: Gold Sparkle (3D Flutter) -->
+    <div class="creature butterfly butterfly-3" title="Bướm Vàng Hoàng Kim 🦋">
+      <svg viewBox="0 0 70 60" class="creature-svg butterfly-svg">
+        <defs>
+          <linearGradient id="bf3-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffd166" />
+            <stop offset="60%" stop-color="#f4a261" />
+            <stop offset="100%" stop-color="#ff70a6" />
+          </linearGradient>
+        </defs>
+        <g class="butterfly-wing-left">
+          <path d="M35 30 C22 6, 0 10, 5 34 C9 44, 25 38, 35 30 Z" fill="url(#bf3-grad)" />
+          <circle cx="16" cy="22" r="4.5" fill="#ffffff" opacity="0.85" />
+          <circle cx="11" cy="30" r="2.8" fill="#ff70a6" opacity="0.9" />
+          <path d="M35 32 C18 38, 6 46, 14 56 C24 62, 34 46, 35 32 Z" fill="#ffd166" />
+          <circle cx="20" cy="48" r="3" fill="#ffffff" opacity="0.85" />
+        </g>
+        <g class="butterfly-wing-right">
+          <path d="M35 30 C48 6, 70 10, 65 34 C61 44, 45 38, 35 30 Z" fill="url(#bf3-grad)" />
+          <circle cx="54" cy="22" r="4.5" fill="#ffffff" opacity="0.85" />
+          <circle cx="59" cy="30" r="2.8" fill="#ff70a6" opacity="0.9" />
+          <path d="M35 32 C52 38, 64 46, 56 56 C46 62, 36 46, 35 32 Z" fill="#ffd166" />
+          <circle cx="50" cy="48" r="3" fill="#ffffff" opacity="0.85" />
+        </g>
+        <ellipse cx="35" cy="33" rx="3.2" ry="14" fill="#2b2d42" />
+        <circle cx="35" cy="18" r="4.2" fill="#2b2d42" />
+        <path d="M34 16 Q27 6 22 8" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round" fill="none" />
+        <circle cx="22" cy="8" r="2.2" fill="#ffd166" />
+        <path d="M36 16 Q43 6 48 8" stroke="#2b2d42" stroke-width="2.2" stroke-linecap="round" fill="none" />
+        <circle cx="48" cy="8" r="2.2" fill="#ffd166" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- Ground Meadow & Garden -->
+  <div class="ground-meadow">
+    <!-- Fairy Lights String for Night Mode -->
+    <div class="fairy-lights">
+      <div class="fairy-bulb" style="animation-delay: 0s;"></div>
+      <div class="fairy-bulb" style="animation-delay: 0.4s;"></div>
+      <div class="fairy-bulb" style="animation-delay: 0.8s;"></div>
+      <div class="fairy-bulb" style="animation-delay: 1.2s;"></div>
+      <div class="fairy-bulb" style="animation-delay: 1.6s;"></div>
+      <div class="fairy-bulb" style="animation-delay: 0.2s;"></div>
+      <div class="fairy-bulb" style="animation-delay: 0.6s;"></div>
+      <div class="fairy-bulb" style="animation-delay: 1.0s;"></div>
+    </div>
+
+    <!-- Grass Meadow Flowers -->
+    <div class="grass-layer">
+      <span class="flower-stem" style="left: 8%; animation-delay: 0.2s;">🌸</span>
+      <span class="flower-stem" style="left: 20%; animation-delay: 0.8s;">🌻</span>
+      <span class="flower-stem" style="left: 35%; animation-delay: 0.5s;">🌷</span>
+      <span class="flower-stem" style="left: 65%; animation-delay: 1.1s;">🌼</span>
+      <span class="flower-stem" style="left: 80%; animation-delay: 0.3s;">🌺</span>
+      <span class="flower-stem" style="left: 92%; animation-delay: 0.9s;">🌸</span>
+    </div>
+  </div>
+
+  <!-- Bottom Interactive Dock Toolbar -->
+  <nav class="bottom-dock">
+    <button class="dock-btn" id="dock-btn-album">
+      <span class="btn-icon-inner">📸</span>
+      <span class="btn-label">Kỷ Niệm (34)</span>
+    </button>
+    <button class="dock-btn primary" id="dock-btn-cake">
+      <span class="btn-icon-inner">🎂</span>
+      <span class="btn-label">Thổi Nến</span>
+    </button>
+    <button class="dock-btn" id="dock-btn-letter">
+      <span class="btn-icon-inner">💌</span>
+      <span class="btn-label">Thư Chúc Mừng</span>
+    </button>
+    <button class="dock-btn" id="dock-btn-wish">
+      <span class="btn-icon-inner">⭐</span>
+      <span class="btn-label">Gửi Điều Ước</span>
+    </button>
+  </nav>
+
+  <!-- ==========================================================================
+       MODALS & EXPERIENCES
+       ========================================================================== -->
+
+  <!-- 1. Polaroid Lightbox Modal (Single Memory Preview) -->
+  <div class="modal-overlay" id="modal-polaroid">
+    <div class="modal-content" style="max-width: 480px; padding: 24px;">
+      <button class="btn-close-modal" aria-label="Đóng">&times;</button>
+      <div class="polaroid-card">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-img-wrapper" id="polaroid-media-container">
+          <img id="polaroid-img" class="polaroid-img" src="./media/img_1.jpg" alt="Kỷ niệm Bé Hạt Ngô">
+        </div>
+        <div class="polaroid-caption">
+          <div id="polaroid-text" class="polaroid-text">Nụ cười tỏa nắng của Bé Hạt Ngô ☀️</div>
+          <div id="polaroid-date" class="polaroid-date">Ảnh kỷ niệm #1</div>
+        </div>
+      </div>
+      <div class="polaroid-nav">
+        <button class="dock-btn" id="btn-polaroid-prev">👈 Xem Trước</button>
+        <button class="dock-btn primary" id="btn-polaroid-heart">
+          <span id="polaroid-heart-count">Thả Tim ❤️</span>
+        </button>
+        <button class="dock-btn" id="btn-polaroid-next">Xem Sau 👉</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Album Gallery Modal (Grid of 34 Photos & Videos) -->
+  <div class="modal-overlay" id="modal-album">
+    <div class="modal-content" style="max-width: 680px;">
+      <button class="btn-close-modal" aria-label="Đóng">&times;</button>
+      <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: var(--text-heading); text-align: center; margin-bottom: 4px;">
+        📸 Bộ Sưu Tập Ký Ức Bé Hạt Ngô
+      </h3>
+      <p style="font-size: 0.88rem; color: var(--text-muted); text-align: center;">
+        Chạm vào từng bức ảnh hoặc video để mở rộng xem chi tiết
+      </p>
+
+      <!-- Filter Tabs -->
+      <div class="album-filter-tabs">
+        <button class="album-filter-btn active" data-filter="all">Tất cả (34)</button>
+        <button class="album-filter-btn" data-filter="image">Ảnh Đẹp (18)</button>
+        <button class="album-filter-btn" data-filter="video">Video (16)</button>
+      </div>
+
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </div>
+
+  <!-- 3. Birthday Cake & Candle Blowing Modal -->
+  <div class="modal-overlay" id="modal-cake">
+    <div class="modal-content" style="max-width: 480px;">
+      <button class="btn-close-modal" aria-label="Đóng">&times;</button>
+      <div class="cake-stage">
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; color: var(--color-pink-accent);">
+          🎂 Thổi Nến Sinh Nhật 🕯️
+        </h3>
+        <p id="cake-status-text" style="font-size: 0.95rem; color: var(--text-muted); margin-top: 6px; padding: 0 10px;">
+          Hãy nhắm mắt lại, ước một điều ước thật đẹp rồi chạm vào nến hoặc nhấn nút bên dưới nha!
+        </p>
+
+        <!-- Interactive 3D Birthday Cake -->
+        <div class="cake-container" id="cake-container">
+          <div class="candle" id="cake-candle">
+            <div class="candle-flame"></div>
+          </div>
+          <div class="cake-tier-top">
+            <span class="cake-strawberry" style="left: 15px;">🍓</span>
+            <span class="cake-strawberry" style="left: 55px;">🍒</span>
+            <span class="cake-strawberry" style="right: 15px;">🍓</span>
+          </div>
+          <div class="cake-tier-bottom">
+            <span class="cake-strawberry" style="left: 20px;">🍓</span>
+            <span class="cake-strawberry" style="left: 80px;">⭐</span>
+            <span class="cake-strawberry" style="right: 20px;">🍓</span>
+          </div>
+        </div>
+
+        <button class="dock-btn primary" id="btn-blow-candle" style="margin-top: 15px; font-size: 1rem; padding: 12px 28px;">
+          🎂 Thổi Nến Ước Nguyện
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Birthday Love Letter Modal -->
+  <div class="modal-overlay" id="modal-letter">
+    <div class="modal-content" style="max-width: 580px;">
+      <button class="btn-close-modal" aria-label="Đóng">&times;</button>
+      <div class="letter-paper">
+        <div class="letter-header">💌 Bức Thư Gửi Bé Hạt Ngô</div>
+        <div class="letter-body">
+          <div id="typewriter-letter-content" style="white-space: pre-wrap; font-family: var(--font-main);"></div>
+        </div>
+        <div class="letter-signature">
+          Thân mến & Yêu quý! 🍀
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Star Wish Launcher Modal -->
+  <div class="modal-overlay" id="modal-wish">
+    <div class="modal-content" style="max-width: 520px;">
+      <button class="btn-close-modal" aria-label="Đóng">&times;</button>
+      <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: var(--text-heading); text-align: center;">
+        ⭐ Cây Điều Ước Bé Hạt Ngô
+      </h3>
+      <p style="font-size: 0.88rem; color: var(--text-muted); text-align: center; margin-top: 4px;">
+        Gửi gắm những ước nguyện và lời chúc tốt lành nhất vào bầu trời đêm
+      </p>
+
+      <div class="wish-input-group">
+        <input type="text" id="wish-input-field" class="wish-input" placeholder="Viết điều ước hoặc lời chúc..." maxlength="120">
+        <button class="btn-wish-submit" id="btn-submit-wish">Thả Sao ⭐</button>
+      </div>
+
+      <div class="wishes-stream" id="wishes-stream">
+        <div class="wish-bubble">
+          <strong>✨ Lời chúc:</strong> Chúc Bé Hạt Ngô luôn mạnh khỏe, tươi vui và ngập tràn may mắn mỗi ngày! 🌽💖
+        </div>
+        <div class="wish-bubble">
+          <strong>✨ Lời chúc:</strong> Chúc tuổi mới rực rỡ như hoa mùa xuân, vạn sự hanh thông! 🌸🎉
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript Modules -->
+  <script src="./js/audio-player.js"></script>
+  <script src="./js/corn-mascot.js"></script>
+  <script src="./js/rain-memories.js"></script>
+  <script src="./js/celebration.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
