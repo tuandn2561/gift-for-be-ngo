@@ -40,41 +40,65 @@ class CelebrationSystem {
   }
 
   initCake() {
+    const cakeContainer = document.getElementById('cake-container');
     if (this.btnBlow) {
       this.btnBlow.addEventListener('click', () => this.blowCandle());
+      this.btnBlow.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        this.blowCandle();
+      });
     }
     if (this.candle) {
       this.candle.addEventListener('click', () => this.blowCandle());
+    }
+    if (cakeContainer) {
+      cakeContainer.addEventListener('click', () => this.blowCandle());
     }
   }
 
   blowCandle() {
     if (this.hasBlown) {
       // Re-light candle
-      this.candle.classList.remove('blown-out');
+      if (this.candle) this.candle.classList.remove('blown-out');
       this.hasBlown = false;
       if (this.btnBlow) this.btnBlow.textContent = '🎂 Thổi Nến Ước Nguyện';
-      if (this.cakeStatus) this.cakeStatus.textContent = 'Hãy nhắm mắt, ước một điều ước thật đẹp rồi nhấn Thổi Nến nha!';
+      if (this.cakeStatus) this.cakeStatus.textContent = 'Hãy nhắm mắt, ước một điều ước thật đẹp rồi chạm vào nến hoặc nhấn Thổi Nến nha!';
+      if (window.birthdayAudio && window.birthdayAudio.playPopSound) {
+        window.birthdayAudio.playPopSound();
+      }
       return;
     }
 
-    if (window.birthdayAudio) {
-      window.birthdayAudio.playBlowCandleSound();
-      setTimeout(() => {
-        window.birthdayAudio.playChimeSound();
-      }, 400);
+    try {
+      if (window.birthdayAudio) {
+        if (window.birthdayAudio.playBlowCandleSound) window.birthdayAudio.playBlowCandleSound();
+        setTimeout(() => {
+          if (window.birthdayAudio && window.birthdayAudio.playChimeSound) {
+            window.birthdayAudio.playChimeSound();
+          }
+        }, 380);
+      }
+    } catch (err) {
+      console.warn('Audio play notice in blowCandle:', err);
     }
 
     if (this.candle) this.candle.classList.add('blown-out');
     this.hasBlown = true;
 
     if (this.cakeStatus) {
-      this.cakeStatus.innerHTML = '🎉 <strong style="color: #ff70a6;">Điều ước đã được gửi đến vũ trụ!</strong> Chúc mọi điều ước của Bé Hạt Ngô thành hiện thực! ✨';
+      this.cakeStatus.innerHTML = '🎉 <strong style="color: #ff70a6;">Điều ước đã được gửi đến vũ trụ!</strong> Chúc mọi ước mơ của chị Ngọc Trinh đều thành hiện thực! ✨';
     }
     if (this.btnBlow) this.btnBlow.textContent = '✨ Thắp lại nến';
 
-    // Trigger explosive celebratory fireworks!
+    // Trigger explosive celebratory fireworks & confetti
     this.triggerGrandFireworks();
+    if (window.confetti) {
+      window.confetti({
+        particleCount: 120,
+        spread: 90,
+        origin: { y: 0.55 }
+      });
+    }
   }
 
   triggerGrandFireworks() {

@@ -593,6 +593,37 @@ class BirthdayAudioSystem {
     osc.stop(now + 0.12);
   }
 
+  playBlowCandleSound() {
+    this.initAudioContext();
+    if (!this.audioCtx) return;
+
+    const now = this.audioCtx.currentTime;
+    const bufferSize = Math.floor(this.audioCtx.sampleRate * 0.4);
+    const buffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.35));
+    }
+
+    const noise = this.audioCtx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = this.audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(850, now);
+    filter.frequency.exponentialRampToValueAtTime(180, now + 0.35);
+
+    const gain = this.audioCtx.createGain();
+    gain.gain.setValueAtTime(0.35, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.masterGain);
+
+    noise.start(now);
+  }
+
   playChimeSound() {
     this.initAudioContext();
     if (!this.audioCtx) return;
